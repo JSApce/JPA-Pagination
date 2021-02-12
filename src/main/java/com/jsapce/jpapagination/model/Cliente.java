@@ -12,16 +12,16 @@ public class Cliente {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long idCliente;
+	private Long id;
 	
 	private String nome;
 
-	public long getIdCliente() {
-		return idCliente;
+	public long getId() {
+		return id;
 	}
 
-	public void setIdCliente(long idCliente) {
-		this.idCliente = idCliente;
+	public void setId(Long idCliente) {
+		this.id = idCliente;
 	}
 
 	public String getNome() {
