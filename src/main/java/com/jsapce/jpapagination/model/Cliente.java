@@ -15,6 +15,8 @@ public class Cliente {
 	private Long id;
 	
 	private String nome;
+	
+	private Integer codigoCliente;
 
 	public long getId() {
 		return id;
@@ -31,6 +33,16 @@ public class Cliente {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	public Integer getCodigoCliente() {
+		return codigoCliente;
+	}
+
+	public void setCodigoCliente(Integer codigoCliente) {
+		this.codigoCliente = codigoCliente;
+	}
+	
+	
 	
 	
 

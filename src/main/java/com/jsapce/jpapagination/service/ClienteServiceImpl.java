@@ -1,11 +1,11 @@
 package com.jsapce.jpapagination.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import com.jsapce.jpapagination.dto.ClienteDto;
 import com.jsapce.jpapagination.model.Cliente;
 import com.jsapce.jpapagination.repository.ClienteRepository;
 
@@ -20,9 +20,9 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 
 	@Override
-	public Page<Cliente> pesquisaCliente(ClienteDto dto, Pageable pageable) {
+	public List<Cliente> pesquisaCliente(Specification<Cliente> spec) {
 
-		return repository.findAll(dto.toSpec(), pageable);
+		return repository.findAll(spec);
 	}
 
 }
