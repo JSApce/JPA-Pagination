@@ -2,6 +2,7 @@ package com.jsapce.jpapagination.util;
 
 public class SpecSearchCriteria {
 	private String key;
+	private String keyAttribute;
 	private SearchOperation operation;
 	private Object value;
 	private boolean orPredicate;
@@ -17,16 +18,17 @@ public class SpecSearchCriteria {
 		this.value = value;
 	}
 
-	public SpecSearchCriteria(final String orPredicate, final String key, final SearchOperation operation,
+	public SpecSearchCriteria(final String orPredicate, final String key, final String keyAttibute, final SearchOperation operation,
 			final Object value) {
 		super();
 		this.orPredicate = orPredicate != null && orPredicate.equals(SearchOperation.OR_PREDICATE_FLAG);
 		this.key = key;
+		this.keyAttribute = keyAttibute;
 		this.operation = operation;
 		this.value = value;
 	}
 
-	public SpecSearchCriteria(String key, String operation, String prefix, String value, String suffix) {
+	public SpecSearchCriteria(String key, String keyAttibute, String operation, String prefix, String value, String suffix) {
 		SearchOperation op = SearchOperation.getSimpleOperation(operation.charAt(0));
 //		if (op != null) {
 //			if (op == SearchOperation.EQUALITY) { // the operation may be complex operation
@@ -43,6 +45,7 @@ public class SpecSearchCriteria {
 //			}
 //		}
 		this.key = key;
+		this.keyAttribute = keyAttibute;
 		this.operation = op;
 		this.value = value;
 	}
@@ -53,6 +56,14 @@ public class SpecSearchCriteria {
 
 	public void setKey(final String key) {
 		this.key = key;
+	}
+
+	public String getKeyAttribute() {
+		return keyAttribute;
+	}
+
+	public void setKeyAttribute(String keyAttribute) {
+		this.keyAttribute = keyAttribute;
 	}
 
 	public SearchOperation getOperation() {

@@ -2,6 +2,8 @@ package com.jsapce.jpapagination.service;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -46,7 +48,11 @@ public class ClienteSpecification implements Specification<Cliente> {
 		case CONTAINS:
 			return builder.like(root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
 		default:
-			return null;
+			Join<Object, Object> objectJoin = root.join(criteria.getKey(), JoinType.LEFT);
+			Predicate equalPredicate = builder.like(objectJoin.get(criteria.getKeyAttribute()),
+					"%" + criteria.getValue() + "%");
+			query.distinct(true);
+			return equalPredicate;
 		}
 	}
 

@@ -21,11 +21,14 @@ public final class UserSpecificationsBuilder {
 		return with(null, key, operation, value, prefix, suffix);
 	}
 
-	public final UserSpecificationsBuilder with(final String orPredicate, final String key, final String operation,
+	public final UserSpecificationsBuilder with(final String orPredicate, String key, final String operation,
 			final Object value, final String prefix, final String suffix) {
 		
 		SearchOperation op = SearchOperation.getSimpleOperation(operation.charAt(0));
 		if (op != null) {
+			
+			String keyAttribute = null;
+			
 			if (op == SearchOperation.EQUALITY) { // the operation may be complex operation
 				final boolean startWithAsterisk = prefix != null && prefix.contains(SearchOperation.ZERO_OR_MORE_REGEX);
 				final boolean endWithAsterisk = suffix != null && suffix.contains(SearchOperation.ZERO_OR_MORE_REGEX);
@@ -37,10 +40,11 @@ public final class UserSpecificationsBuilder {
 				} else if (endWithAsterisk) {
 					op = SearchOperation.STARTS_WITH;
 				}
-			} else if (op == SearchOperation.LIKE) {
-				op = SearchOperation.CONTAINS;
+			} else if(op == SearchOperation.JOIN) {
+				keyAttribute = key.split("_")[1];
+				key = key.split("_")[0];
 			}
-			params.add(new SpecSearchCriteria(orPredicate, key, op, value));
+			params.add(new SpecSearchCriteria(orPredicate, key, keyAttribute, op, value));
 		}
 		return this;
 	}

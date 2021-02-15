@@ -2,7 +2,7 @@ package com.jsapce.jpapagination.util;
 
 public enum SearchOperation {
 
-	EQUALITY, NEGATION, GREATER_THAN, LESS_THAN, LIKE, STARTS_WITH, ENDS_WITH, CONTAINS;
+	EQUALITY, NEGATION, GREATER_THAN, LESS_THAN, LIKE, STARTS_WITH, ENDS_WITH, CONTAINS, JOIN;
 
 	public static final String[] SIMPLE_OPERATION_SET = { ":", "!", ">", "<", "~" };
 
@@ -17,7 +17,7 @@ public enum SearchOperation {
 	public static final String LEFT_PARANTHESIS = "(";
 
 	public static final String RIGHT_PARANTHESIS = ")";
-
+	
 	public static SearchOperation getSimpleOperation(final char input) {
 		switch (input) {
 		case ':':
@@ -29,7 +29,7 @@ public enum SearchOperation {
 		case '<':
 			return LESS_THAN;
 		case '~':
-			return LIKE;
+			return JOIN;
 		default:
 			return null;
 		}
