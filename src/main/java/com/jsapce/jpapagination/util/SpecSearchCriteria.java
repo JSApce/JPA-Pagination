@@ -4,6 +4,7 @@ public class SpecSearchCriteria {
 	private String key;
 	private String keyAttribute;
 	private SearchOperation operation;
+	private boolean operationJoin;
 	private Object value;
 	private boolean orPredicate;
 
@@ -11,42 +12,15 @@ public class SpecSearchCriteria {
 
 	}
 
-	public SpecSearchCriteria(final String key, final SearchOperation operation, final Object value) {
-		super();
-		this.key = key;
-		this.operation = operation;
-		this.value = value;
-	}
-
-	public SpecSearchCriteria(final String orPredicate, final String key, final String keyAttibute, final SearchOperation operation,
-			final Object value) {
+	public SpecSearchCriteria(final String orPredicate, final String key, final String keyAttibute,
+			final SearchOperation operationJoin, final SearchOperation operation, final Object value) {
 		super();
 		this.orPredicate = orPredicate != null && orPredicate.equals(SearchOperation.OR_PREDICATE_FLAG);
 		this.key = key;
 		this.keyAttribute = keyAttibute;
+		System.err.println("operation " + operation);
 		this.operation = operation;
-		this.value = value;
-	}
-
-	public SpecSearchCriteria(String key, String keyAttibute, String operation, String prefix, String value, String suffix) {
-		SearchOperation op = SearchOperation.getSimpleOperation(operation.charAt(0));
-//		if (op != null) {
-//			if (op == SearchOperation.EQUALITY) { // the operation may be complex operation
-//				final boolean startWithAsterisk = prefix != null && prefix.contains(SearchOperation.ZERO_OR_MORE_REGEX);
-//				final boolean endWithAsterisk = suffix != null && suffix.contains(SearchOperation.ZERO_OR_MORE_REGEX);
-//
-//				if (startWithAsterisk && endWithAsterisk) {
-//					op = SearchOperation.CONTAINS;
-//				} else if (startWithAsterisk) {
-//					op = SearchOperation.ENDS_WITH;
-//				} else if (endWithAsterisk) {
-//					op = SearchOperation.STARTS_WITH;
-//				}
-//			}
-//		}
-		this.key = key;
-		this.keyAttribute = keyAttibute;
-		this.operation = op;
+		this.operationJoin = operationJoin != null && operationJoin.equals(SearchOperation.JOIN);
 		this.value = value;
 	}
 
@@ -72,6 +46,14 @@ public class SpecSearchCriteria {
 
 	public void setOperation(final SearchOperation operation) {
 		this.operation = operation;
+	}
+
+	public boolean isOperationJoin() {
+		return operationJoin;
+	}
+
+	public void setOperationJoin(boolean operationJoin) {
+		this.operationJoin = operationJoin;
 	}
 
 	public Object getValue() {

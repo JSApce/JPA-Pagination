@@ -16,19 +16,21 @@ public final class UserSpecificationsBuilder {
 		params = new ArrayList<>();
 	}
 
-	public final UserSpecificationsBuilder with(final String key, final String operation, final Object value,
-			final String prefix, final String suffix) {
-		return with(null, key, operation, value, prefix, suffix);
+	public final UserSpecificationsBuilder with(final String key, final String operationJoin, final String operation,
+			final Object value, final String prefix, final String suffix) {
+		return with(null, key, operationJoin, operation, value, prefix, suffix);
 	}
 
-	public final UserSpecificationsBuilder with(final String orPredicate, String key, final String operation,
-			final Object value, final String prefix, final String suffix) {
-		
+	public final UserSpecificationsBuilder with(final String orPredicate, String key, final String operationJoin,
+			final String operation, final Object value, final String prefix, final String suffix) {
+
 		SearchOperation op = SearchOperation.getSimpleOperation(operation.charAt(0));
+		SearchOperation opJoin = operationJoin.isEmpty() ? null : SearchOperation.getSimpleOperation(operationJoin.charAt(0));
+
 		if (op != null) {
-			
+
 			String keyAttribute = null;
-			
+
 			if (op == SearchOperation.EQUALITY) { // the operation may be complex operation
 				final boolean startWithAsterisk = prefix != null && prefix.contains(SearchOperation.ZERO_OR_MORE_REGEX);
 				final boolean endWithAsterisk = suffix != null && suffix.contains(SearchOperation.ZERO_OR_MORE_REGEX);
@@ -40,11 +42,16 @@ public final class UserSpecificationsBuilder {
 				} else if (endWithAsterisk) {
 					op = SearchOperation.STARTS_WITH;
 				}
-			} else if(op == SearchOperation.JOIN) {
+			} else if(op == SearchOperation.LIKE) {
+				op = SearchOperation.CONTAINS;
+			}
+			
+			if (opJoin != null && opJoin == SearchOperation.JOIN) {
 				keyAttribute = key.split("_")[1];
 				key = key.split("_")[0];
 			}
-			params.add(new SpecSearchCriteria(orPredicate, key, keyAttribute, op, value));
+			
+			params.add(new SpecSearchCriteria(orPredicate, key, keyAttribute, opJoin, op, value));
 		}
 		return this;
 	}

@@ -10,6 +10,7 @@ import javax.persistence.criteria.Root;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.jsapce.jpapagination.model.Cliente;
+import com.jsapce.jpapagination.util.SearchOperation;
 import com.jsapce.jpapagination.util.SpecSearchCriteria;
 
 public class ClienteSpecification implements Specification<Cliente> {
@@ -30,30 +31,76 @@ public class ClienteSpecification implements Specification<Cliente> {
 	@Override
 	public Predicate toPredicate(final Root<Cliente> root, final CriteriaQuery<?> query,
 			final CriteriaBuilder builder) {
-		switch (criteria.getOperation()) {
-		case EQUALITY:
-			return builder.equal(root.get(criteria.getKey()), criteria.getValue());
-		case NEGATION:
-			return builder.notEqual(root.get(criteria.getKey()), criteria.getValue());
-		case GREATER_THAN:
-			return builder.greaterThan(root.get(criteria.getKey()), criteria.getValue().toString());
-		case LESS_THAN:
-			return builder.lessThan(root.get(criteria.getKey()), criteria.getValue().toString());
-		case LIKE:
-			return builder.like(root.get(criteria.getKey()), criteria.getValue().toString());
-		case STARTS_WITH:
-			return builder.like(root.get(criteria.getKey()), criteria.getValue() + "%");
-		case ENDS_WITH:
-			return builder.like(root.get(criteria.getKey()), "%" + criteria.getValue());
-		case CONTAINS:
-			return builder.like(root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
-		default:
+
+		if (criteria.isOperationJoin()) {
+
 			Join<Object, Object> objectJoin = root.join(criteria.getKey(), JoinType.LEFT);
-			Predicate equalPredicate = builder.like(objectJoin.get(criteria.getKeyAttribute()),
-					"%" + criteria.getValue() + "%");
+			Predicate predicate = null;
+
+			if (criteria.getOperation().equals(SearchOperation.EQUALITY)) {
+
+				predicate = builder.equal(objectJoin.get(criteria.getKeyAttribute()), criteria.getValue());
+
+			} else if (criteria.getOperation().equals(SearchOperation.NEGATION)) {
+
+				predicate = builder.notEqual(objectJoin.get(criteria.getKeyAttribute()), criteria.getValue());
+
+			} else if (criteria.getOperation().equals(SearchOperation.GREATER_THAN)) {
+
+				predicate = builder.greaterThan(objectJoin.get(criteria.getKeyAttribute()),
+						criteria.getValue().toString());
+
+			} else if (criteria.getOperation().equals(SearchOperation.LESS_THAN)) {
+
+				predicate = builder.lessThan(objectJoin.get(criteria.getKeyAttribute()),
+						criteria.getValue().toString());
+
+			} else if (criteria.getOperation().equals(SearchOperation.LIKE)) {
+
+				predicate = builder.like(objectJoin.get(criteria.getKeyAttribute()), criteria.getValue().toString());
+
+			} else if (criteria.getOperation().equals(SearchOperation.STARTS_WITH)) {
+
+				predicate = builder.like(objectJoin.get(criteria.getKeyAttribute()), criteria.getValue() + "%");
+
+			} else if (criteria.getOperation().equals(SearchOperation.ENDS_WITH)) {
+
+				predicate = builder.like(objectJoin.get(criteria.getKeyAttribute()), "%" + criteria.getValue());
+
+			} else if (criteria.getOperation().equals(SearchOperation.CONTAINS)) {
+
+				predicate = builder.like(objectJoin.get(criteria.getKeyAttribute()), "%" + criteria.getValue() + "%");
+
+			}
+
 			query.distinct(true);
-			return equalPredicate;
+			return predicate;
+
+		} else {
+			System.err.println(criteria.getOperation());
+			switch (criteria.getOperation()) {
+			case EQUALITY:
+				return builder.equal(root.get(criteria.getKey()), criteria.getValue());
+			case NEGATION:
+				return builder.notEqual(root.get(criteria.getKey()), criteria.getValue());
+			case GREATER_THAN:
+				return builder.greaterThan(root.get(criteria.getKey()), criteria.getValue().toString());
+			case LESS_THAN:
+				return builder.lessThan(root.get(criteria.getKey()), criteria.getValue().toString());
+			case LIKE:
+				return builder.like(root.get(criteria.getKey()), criteria.getValue().toString());
+			case STARTS_WITH:
+				return builder.like(root.get(criteria.getKey()), criteria.getValue() + "%");
+			case ENDS_WITH:
+				return builder.like(root.get(criteria.getKey()), "%" + criteria.getValue());
+			case CONTAINS:
+				return builder.like(root.get(criteria.getKey()), "%" + criteria.getValue() + "%");
+			default:
+				return null;
+			}
+
 		}
+
 	}
 
 }

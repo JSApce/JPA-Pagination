@@ -8,7 +8,7 @@ public enum SearchOperation {
 
 	public static final String OR_PREDICATE_FLAG = "'";
 
-	public static final String ZERO_OR_MORE_REGEX = "*";
+	public static final String ZERO_OR_MORE_REGEX = "?";
 
 	public static final String OR_OPERATOR = "OR";
 
@@ -29,6 +29,8 @@ public enum SearchOperation {
 		case '<':
 			return LESS_THAN;
 		case '~':
+			return LIKE;
+		case '*':
 			return JOIN;
 		default:
 			return null;

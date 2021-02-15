@@ -28,14 +28,17 @@ public class ClienteController {
 
 	@GetMapping("/spec")
 	public List<Cliente> findAllBySpecification(@RequestParam(value = "search") String search) {
+
 		UserSpecificationsBuilder builder = new UserSpecificationsBuilder();
 		String operationSetExper = Joiner.on("|").join(SearchOperation.SIMPLE_OPERATION_SET);
 		String operationSetPredicateFlagExper = ",";
-		Pattern pattern = Pattern.compile("(\\w+?)(" + operationSetExper + ")(\\p{Punct}?)(\\w+?)(\\p{Punct}?)("
-				+ operationSetPredicateFlagExper + ")(\\p{Punct}?);");
+		Pattern pattern = Pattern.compile("(\\w+?)(\\p{Punct}?)(" + operationSetExper
+				+ ")(\\p{Punct}?)(\\w+?)(\\p{Punct}?)(" + operationSetPredicateFlagExper + ")(\\p{Punct}?);");
 		Matcher matcher = pattern.matcher(search + ";");
+
 		while (matcher.find()) {
-			builder.with(matcher.group(7), matcher.group(1), matcher.group(2), matcher.group(4), matcher.group(3), matcher.group(5));
+			builder.with(matcher.group(8), matcher.group(1), matcher.group(2), matcher.group(3), matcher.group(5),
+					matcher.group(4), matcher.group(6));
 		}
 
 		Specification<Cliente> spec = builder.build();
