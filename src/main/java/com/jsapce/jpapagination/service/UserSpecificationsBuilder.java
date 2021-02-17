@@ -1,5 +1,7 @@
 package com.jsapce.jpapagination.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,12 +19,12 @@ public final class UserSpecificationsBuilder {
 	}
 
 	public final UserSpecificationsBuilder with(final String key, final String operationJoin, final String operation,
-			final Object value, final String prefix, final String suffix) {
+			Object value, final String prefix, final String suffix) {
 		return with(null, key, operationJoin, operation, value, prefix, suffix);
 	}
 
 	public final UserSpecificationsBuilder with(final String orPredicate, String key, final String operationJoin,
-			final String operation, final Object value, final String prefix, final String suffix) {
+			final String operation, Object value, final String prefix, final String suffix) {
 
 		SearchOperation op = SearchOperation.getSimpleOperation(operation.charAt(0));
 		SearchOperation opJoin = operationJoin.isEmpty() ? null : SearchOperation.getSimpleOperation(operationJoin.charAt(0));
@@ -46,9 +48,15 @@ public final class UserSpecificationsBuilder {
 				op = SearchOperation.CONTAINS;
 			}
 			
+			
+			
 			if (opJoin != null && opJoin == SearchOperation.JOIN) {
 				keyAttribute = key.split("_")[1];
 				key = key.split("_")[0];
+				
+				if(keyAttribute.equals("dataCadastro")) {
+					value =  LocalDate.parse( (CharSequence) value, DateTimeFormatter.BASIC_ISO_DATE);
+				}
 			}
 			
 			params.add(new SpecSearchCriteria(orPredicate, key, keyAttribute, opJoin, op, value));

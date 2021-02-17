@@ -18,7 +18,6 @@ public class SpecSearchCriteria {
 		this.orPredicate = orPredicate != null && orPredicate.equals(SearchOperation.OR_PREDICATE_FLAG);
 		this.key = key;
 		this.keyAttribute = keyAttibute;
-		System.err.println("operation " + operation);
 		this.operation = operation;
 		this.operationJoin = operationJoin != null && operationJoin.equals(SearchOperation.JOIN);
 		this.value = value;

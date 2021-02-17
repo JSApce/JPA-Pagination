@@ -38,7 +38,6 @@ public class ClienteSpecification implements Specification<Cliente> {
 			Predicate predicate = null;
 
 			if (criteria.getOperation().equals(SearchOperation.EQUALITY)) {
-
 				predicate = builder.equal(objectJoin.get(criteria.getKeyAttribute()), criteria.getValue());
 
 			} else if (criteria.getOperation().equals(SearchOperation.NEGATION)) {
@@ -77,7 +76,6 @@ public class ClienteSpecification implements Specification<Cliente> {
 			return predicate;
 
 		} else {
-			System.err.println(criteria.getOperation());
 			switch (criteria.getOperation()) {
 			case EQUALITY:
 				return builder.equal(root.get(criteria.getKey()), criteria.getValue());
