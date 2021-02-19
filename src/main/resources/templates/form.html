@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+	crossorigin="anonymous">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pesquisa dinâmica com JPA Data Specification</title>
+</head>
+
+<body class="container">
+
+	<form class="mt-4">
+
+		<button type="submit" class="btn btn-primary  btn-sm mb-3">Submit</button>
+
+		<div class="row g-2">
+			<div class="col-sm-1">
+				<button type="button" class="btn btn-secondary btn-sm">ADD</button>
+			</div>
+			<div class="col-sm">
+				<div class="form-floating">
+					<select class="form-select" id="floatingSelectGrid"
+						aria-label="Floating label select example">
+						<option value="cliente" selected>Cliente</option>
+						<option value="1">Detalhe Cliente</option>
+						<option value="2">Endereço</option>
+						<option value="3">outro</option>
+					</select> <label for="floatingSelectGrid">Filtrar por</label>
+				</div>
+			</div>
+			<div class="col-sm">
+				<div class="form-floating">
+					<select class="form-select" id="floatingSelectGrid"
+						aria-label="Floating label select example">
+						<option selected>Nome</option>
+						<option value="1">Código</option>
+						<option value="2">Two</option>
+						<option value="3">Three</option>
+					</select> <label for="floatingSelectGrid">Campo</label>
+				</div>
+			</div>
+			<div class="col-sm">
+				<div class="form-floating">
+					<select class="form-select" id="floatingSelectGrid"
+						aria-label="Floating label select example">
+						<option selected>Exato</option>
+						<option value="1">contém</option>
+						<option value="1">Não contém</option>
+						<option value="2">Maior que</option>
+						<option value="3">Menor que</option>
+						<option value="2">Inicia com</option>
+						<option value="2">Termina com</option>
+					</select> <label for="floatingSelectGrid">Parâmetro</label>
+				</div>
+			</div>
+			<div class="col-sm-5">
+				<div class="form-floating">
+					<input type="text" class="form-control" id="floatingInputGrid"
+						maxlength="200"> <label for="floatingInputGrid">Valor</label>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="row g-2 mt-1">
+			<div class="col-sm-1">
+				<div class="form-floating">
+					<select class="form-select" id="floatingSelectGrid"
+						aria-label="Floating label select example">
+						<option value="cliente" selected>E</option>
+						<option value="1">OU</option>
+					</select> <label for="floatingSelectGrid"></label>
+				</div>
+			</div>
+			<div class="col-sm">
+				<div class="form-floating">
+					<select class="form-select" id="floatingSelectGrid"
+						aria-label="Floating label select example">
+						<option value="cliente" selected>Cliente</option>
+						<option value="1">Detalhe Cliente</option>
+						<option value="2">Endereço</option>
+						<option value="3">outro</option>
+					</select> <label for="floatingSelectGrid">Filtrar por</label>
+				</div>
+			</div>
+			<div class="col-sm">
+				<div class="form-floating">
+					<select class="form-select" id="floatingSelectGrid"
+						aria-label="Floating label select example">
+						<option selected>Nome</option>
+						<option value="1">Código</option>
+						<option value="2">Two</option>
+						<option value="3">Three</option>
+					</select> <label for="floatingSelectGrid">Campo</label>
+				</div>
+			</div>
+			<div class="col-sm">
+				<div class="form-floating">
+					<select class="form-select" id="floatingSelectGrid"
+						aria-label="Floating label select example">
+						<option selected>Exato</option>
+						<option value="1">contém</option>
+						<option value="1">Não contém</option>
+						<option value="2">Maior que</option>
+						<option value="3">Menor que</option>
+						<option value="2">Inicia com</option>
+						<option value="2">Termina com</option>
+					</select> <label for="floatingSelectGrid">Parâmetro</label>
+				</div>
+			</div>
+			<div class="col-sm-5">
+				<div class="form-floating">
+					<input type="text" class="form-control" id="floatingInputGrid"
+						maxlength="200"> <label for="floatingInputGrid">Valor</label>
+				</div>
+			</div>
+
+		</div>
+
+	</form>
+
+	<script type="text/javascript"
+		src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+		crossorigin="anonymous"></script>
+</body>
+</html>
